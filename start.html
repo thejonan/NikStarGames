@@ -34,14 +34,14 @@
                 result={};
                 result.img=new Image();
                 result.img.src = "images/"+imageNameWithoutDotPng + ".png";
-                result.color=backupColor;
+                result.color = backupColor;
                 return result;
             }
             function tryToLoadWithFullPath(imageNameAndPath,backupColor){
                 result={};
-                result.img=new Image();
+                result.img = new Image();
                 result.img.src = imageNameAndPath;
-                result.color=backupColor;
+                result.color = backupColor;
                 return result;
             }           
             function drawImage(imageWithBackupColorObject,x,y,xs,ys){
