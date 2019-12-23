@@ -11,7 +11,7 @@ var tochki = 0,
 	my = {
 		X: 0,
 		Y: 0,
-		Razmer: 120,
+		Razmer: 100,
 		Skorost: 3
 	},
 	lastPatronTime = 0,
