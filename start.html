@@ -11,7 +11,7 @@
     </style>
 </head>
     <body  onload="init()">
-	   <canvas id="canvas-id" width="800" height="600">
+	   <canvas id="canvas-id" width="600" height="600">
            <script>
             function areColliding(Ax, Ay, Awidth, Aheight, Bx, By, Bwidth, Bheight) {
                 if (Bx <= Ax + Awidth) {
@@ -76,7 +76,7 @@
                 };
             }
             else {
-                canvas.width = 800;
+                canvas.width = 600;
                 canvas.height = 600;
             }
             var context = canvas.getContext("2d");
@@ -95,7 +95,7 @@
             for (i = 0; i < 256; ++i) {
                 isKeyPressed.push(0);
             }
-            // gridSize = 50; // uncomment or add to game.js if you want a grid
+
             var reqAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
                 setTimeout(callback, 1000 / 30);
             };
@@ -510,28 +510,25 @@
                 zombie=tryToLoad("zombie","green");
                 zombieHello=tryToLoad("zombieHello","green");
                 zombieWalk=tryToLoad("zombieWalk","green");
+                
+            function drawGrid(gridSize){
+                //context.fillStyle = "#FF0000";
+                context.beginPath();
+                for (i = gridSize; i < canvas.width; i += gridSize) {
+                    context.moveTo(i, 0);
+                    context.lineTo(i, canvas.height);
+                }
+                for (i = gridSize; i < canvas.height; i += gridSize) {
+                    context.moveTo(0, i);
+                    context.lineTo(canvas.width, i);
+                }
+                context.stroke();
+            }
+
             function redraw() {
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 draw(); // call progammer's draw() function
                 context.globalAlpha = 1;
-                // draw grid
-                //context.fillStyle = "#FF0000";
-                context.font = "10px Arial";
-                if (typeof gridSize != "undefined" && gridSize >= 25) {
-                    context.fillText(0, 4, 10);
-                    context.beginPath();
-                    for (i = gridSize; i < canvas.width; i += gridSize) {
-                        context.moveTo(i, 0);
-                        context.lineTo(i, canvas.height);
-                        context.fillText(i, i + 4, 10);
-                    }
-                    for (i = gridSize; i < canvas.height; i += gridSize) {
-                        context.moveTo(0, i);
-                        context.lineTo(canvas.width, i);
-                        context.fillText(i, 4, i + 10);
-                    }
-                    context.stroke();
-                }
 
                 reqAnimationFrame(redraw);
             };
