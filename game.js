@@ -36,10 +36,12 @@ function newGame() {
 }
 
 function endGame() {
-	var winner = MapArr[winLine.row][winLine.col];
-	
-	scores[winner]++ ;
-	document.getElementById("scores-el-" + winner).innerHTML = scores[winner] ;
+	if (winLine != null){
+		var winner = MapArr[winLine.row][winLine.col];
+		
+		scores[winner]++ ;
+		document.getElementById("scores-el-" + winner).innerHTML = scores[winner] ;
+	}
 
 	gameActive = false;
 	document.getElementById("button-new-game").style.display = "block";
