@@ -1,11 +1,14 @@
-var MapArr = [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-	turn = 0 ,
-	sizeGrid = 200 ,
+var MapArr = null,
+	turn = 0,
+	gameActive = false,
+	sizeGrid = 200,
 	padGrid = 10,
 	winLine = null;
 
+newGame();
+
 function makeTurn (row, col){
-	if (MapArr[row][col] == 0){
+	if (gameActive && MapArr[row][col] == 0){
 		MapArr[row][col] = (turn++) % 2 == 0 ? "o" : "x" ;
 	}
 }
@@ -23,12 +26,16 @@ function checkLine(info) {
 	return val && val == v2 && val == v3 ? info : null;
 }
 
-function newGame(){
-	if (turn == 9 || winLine != null) {
-		MapArr = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
-		turn = 0;
-		document.getElementById("button-new-game").style.display="block";
-	}
+function newGame() {
+	MapArr = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+	turn = 0;
+	gameActive = true;
+	document.getElementById("button-new-game").style.display = "none";
+}
+
+function endGame() {
+	gameActive = false;
+	document.getElementById("button-new-game").style.display = "block";
 }
 
 function checkWin(){
@@ -47,7 +54,8 @@ function checkWin(){
 function update() {
 
 	winLine = checkWin();
-	newGame();
+	if (turn == 9 || winLine != null)
+		endGame();
 
 	if (turn % 2 == 0){
 		
