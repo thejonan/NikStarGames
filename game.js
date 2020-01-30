@@ -1,11 +1,13 @@
-var MapArr = null,
+var MapArr = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	turn = 0,
-	gameActive = false,
+	gameActive = true,
 	sizeGrid = 200,
 	padGrid = 10,
-	winLine = null;
-
-newGame();
+	winLine = null
+	scores = {
+		x: 0,
+		o: 0
+	};
 
 function makeTurn (row, col){
 	if (gameActive && MapArr[row][col] == 0){
@@ -34,6 +36,11 @@ function newGame() {
 }
 
 function endGame() {
+	var winner = MapArr[winLine.row][winLine.col];
+	
+	scores[winner]++ ;
+	document.getElementById("scores-el-" + winner).innerHTML = scores[winner] ;
+
 	gameActive = false;
 	document.getElementById("button-new-game").style.display = "block";
 }
@@ -54,12 +61,8 @@ function checkWin(){
 function update() {
 
 	winLine = checkWin();
-	if (turn == 9 || winLine != null)
+	if (gameActive && (turn == 9 || winLine != null))
 		endGame();
-
-	if (turn % 2 == 0){
-		
-	}
 }
 
 function draw() {
