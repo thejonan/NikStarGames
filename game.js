@@ -23,6 +23,14 @@ function checkLine(info) {
 	return val && val == v2 && val == v3 ? info : null;
 }
 
+function newGame(){
+	if (turn == 9 || winLine != null) {
+		MapArr = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+		turn = 0;
+		document.getElementById("button-new-game").style.display="block";
+	}
+}
+
 function checkWin(){
 	return checkLine({row: 0, col: 0, dir: 0}) ||
 		checkLine({row: 1, col: 0, dir: 0}) ||
@@ -37,12 +45,13 @@ function checkWin(){
 }
 
 function update() {
-	if (turn == 9) {
-		MapArr = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
-		turn = 0;
-	}
 
 	winLine = checkWin();
+	newGame();
+
+	if (turn % 2 == 0){
+		
+	}
 }
 
 function draw() {
@@ -53,8 +62,8 @@ function draw() {
 			if (val) {
 				drawImage(val == "x" ? laserBlue[2] : ballOrTree,
 					col * sizeGrid + padGrid,
-					row * sizeGrid + padGrid, 
-					sizeGrid - 2 * padGrid, 
+					row * sizeGrid + padGrid,
+					sizeGrid - 2 * padGrid,
 					sizeGrid - 2 * padGrid);
 			}
 		}
