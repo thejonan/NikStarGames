@@ -28,6 +28,10 @@ function checkLine(info) {
 	return val && val == v2 && val == v3 ? info : null;
 }
 
+function computerPlay() {
+
+}
+
 function newGame() {
 	MapArr = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 	turn = 0;
