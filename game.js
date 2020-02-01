@@ -15,6 +15,45 @@ function makeTurn (row, col){
 	}
 }
 
+function testTurn(who, turn) {
+	var maxPos = { row: null, col: null, score: 0},
+		scoreMap = [[], [], []],
+		me = turn % 2 == 1;
+
+	for (var row = 0; row < 3; ++row)
+		for (var col = 0; col < 3; ++col) {
+			if (!!MapArr[row][col])
+				continue;
+			
+			// Make the turn
+			MapArr[row][col] = who;
+			
+			var testWin = checkWin(), 
+				score = 0;
+			
+			if (!testWin) // No winner, yet - go deeper.
+				score = testTurn(who == 'x' ? 'o' : 'x', turn + 1).score;
+			else
+				score = (me ? 1 : -1) / turn;
+			
+			scoreMap[row][col] = score;
+			if ((maxPos.score == 0) || 
+				(me && score > maxPos.score) || 
+				(!me && score < maxPos.score))
+			{
+				maxPos = {
+					row: row,
+					col: col,
+					score: score
+				}
+			}
+
+			MapArr[row][col] = 0;
+		}
+
+	return maxPos;
+}
+
 function checkLine(info) {
 	var val = MapArr[info.row][info.col], v2, v3;
 
@@ -65,6 +104,10 @@ function update() {
 	winLine = checkWin();
 	if (gameActive && (turn == 9 || winLine != null))
 		endGame();
+	else if (turn % 2 == 1) {
+		var move = testTurn('x', 1);
+		makeTurn(move.row, move.col);
+	}
 }
 
 function draw() {
